@@ -1589,15 +1589,6 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') saveCurrentScroll();
 });
 
-// initial restore on load
-(function initFromHash() {
-  let t = (location.hash || '').slice(1);
-  if (!t || !document.getElementById(t)) t = 'ov';
-  _suppressHash = true;
-  show(t, {restoreScroll: true});
-  _suppressHash = false;
-})();
-
 // ── DROPDOWN ────────────────────────────────────────────
 function showFromDropdown(t) {
   closeDropdown();
@@ -1682,6 +1673,15 @@ function toggleStage(hdr) {
   body.classList.toggle('open', !isOpen);
   toggle.textContent = isOpen ? '+ expand' : '– collapse';
 }
+
+// ── INITIAL RESTORE (last so all bindings are ready) ────
+(function initFromHash() {
+  let t = (location.hash || '').slice(1);
+  if (!t || !document.getElementById(t)) t = 'ov';
+  _suppressHash = true;
+  show(t, {restoreScroll: true});
+  _suppressHash = false;
+})();
 </script>
 </body>
 </html>
