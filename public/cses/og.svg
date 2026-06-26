@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#f5f2ed"/>
+
+  <line x1="60" y1="88" x2="1140" y2="88" stroke="#d0c9be" stroke-width="1"/>
+
+  <text x="60" y="62" fill="#7a7a7a"
+        font-family="'IBM Plex Mono', Menlo, Consolas, 'Courier New', monospace"
+        font-size="18" letter-spacing="3">
+    BLUEPRINT FOR CREATIVITY  ·  ENGAGEMENT PROPOSAL
+  </text>
+
+  <text x="60" y="220" fill="#1a1a1a"
+        font-family="'DM Serif Display', Georgia, 'Times New Roman', serif"
+        font-size="84">
+    Cambridge School
+  </text>
+  <text x="60" y="310" fill="#1a1a1a"
+        font-family="'DM Serif Display', Georgia, 'Times New Roman', serif"
+        font-size="84">
+    of Edible Sustainability
+  </text>
+
+  <text x="60" y="420" fill="#4a4a4a"
+        font-family="'DM Serif Display', Georgia, 'Times New Roman', serif"
+        font-style="italic" font-size="40">
+    So the workshop can run again.
+  </text>
+
+  <rect x="60"  y="540" width="265" height="6" fill="#3a7ca5"/>
+  <rect x="335" y="540" width="265" height="6" fill="#c45a2d"/>
+  <rect x="610" y="540" width="265" height="6" fill="#8b5e8b"/>
+  <rect x="885" y="540" width="255" height="6" fill="#b8860b"/>
+
+  <text x="60" y="590" fill="#7a7a7a"
+        font-family="'IBM Plex Mono', Menlo, Consolas, 'Courier New', monospace"
+        font-size="18" letter-spacing="2">
+    Nancy &amp; Andrew · June 2026
+  </text>
+  <text x="1140" y="590" text-anchor="end" fill="#7a7a7a"
+        font-family="'IBM Plex Mono', Menlo, Consolas, 'Courier New', monospace"
+        font-size="18" letter-spacing="2">
+    blueprintforcreativity.net/cses
+  </text>
+</svg>
