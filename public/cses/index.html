@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSES Engagement Proposal · Blueprint for Creativity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:         #1a1a1a;
+  --ink-light:   #4a4a4a;
+  --ink-muted:   #7a7a7a;
+  --ground:      #f5f2ed;
+  --ground-warm: #ebe6dd;
+  --white:       #faf8f4;
+  --accent:      #c45a2d;
+  --rule:        #d0c9be;
+  --dark-bg:     #1a1a1a;
+  --dark-text:   #c8c2b8;
+  --dark-prose:  #b0a99e;
+  --dark-muted:  #888888;
+  --dark-rule:   #333333;
+  --plum:        #8b5e8b;
+  --ochre:       #b8860b;
+  --steel:       #3a7ca5;
+  --sage:        #5a8a3a;
+  --brick:       #b03030;
+  --umber:       #6b3a2a;
+  --c1: var(--steel);
+  --c2: var(--accent);
+  --c3: var(--plum);
+  --c4: var(--ochre);
+  --cp: var(--sage);
+  --display: 'DM Serif Display', Georgia, serif;
+  --body:    'IBM Plex Sans', -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', 'Courier New', monospace;
+  --mw: 1080px;
+  --g: clamp(1.5rem, 5vw, 3.5rem);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body);background:var(--ground);color:var(--ink-light);line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ── HEADER (ATM brand pattern) ── */
+.hdr{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.93);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.hdr-in{
+  max-width:var(--mw);margin:0 auto;
+  padding:.0 var(--g);
+  display:flex;justify-content:space-between;align-items:center;
+  min-height:52px;
+  gap:2rem;
+}
+.hdr-left{display:flex;align-items:center;gap:.75rem;flex-shrink:0;background:none;border:none;cursor:pointer;padding:0;transition:opacity .18s;}
+.hdr-left:hover{opacity:.7;}
+.hdr-cses-icon{
+  display:block;
+  height:64px;
+  width:auto;
+  clip-path:inset(0 0 38% 0);
+  margin-bottom:-12px;
+}
+.cses-home{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;}
+.cses-logo{height:34px;width:auto;display:block;transition:opacity .18s;}
+.cses-home:hover .cses-logo{opacity:.72;}
+.wordmark{font-family:var(--mono);font-size:.85rem;font-weight:500;color:var(--ink);white-space:nowrap;letter-spacing:.02em;}
+
+/* ── HAMBURGER ── */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:4px;width:28px;flex-shrink:0;}
+.hamburger span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;transition:all .25s ease;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ── DRAWER ── */
+.drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;opacity:0;transition:opacity .25s ease;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,88vw);background:var(--white);border-left:1px solid var(--rule);z-index:201;transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);overflow-y:auto;display:flex;flex-direction:column;}
+.drawer.open{transform:translateX(0);}
+.drawer-hdr{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--rule);}
+.drawer-hdr-lbl{font-family:var(--mono);font-size:.75rem;color:var(--ink);letter-spacing:.02em;}
+.drawer-close{font-size:1.4rem;line-height:1;color:var(--ink-muted);background:none;border:none;cursor:pointer;padding:.1rem;}
+.drawer-close:hover{color:var(--ink);}
+.drawer-body{padding:.5rem 0;flex:1;}
+.dbtn{display:block;width:100%;text-align:left;font-family:var(--mono);font-size:.8rem;color:var(--ink-muted);background:none;border:none;cursor:pointer;padding:.7rem 1.25rem;transition:background .15s,color .15s;letter-spacing:.04em;}
+.dbtn:hover{background:var(--ground-warm);color:var(--ink);}
+.dbtn.on{color:var(--accent);}
+.drawer-slbl{font-family:var(--body);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);padding:1rem 1.25rem .35rem;}
+.dphase{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;font-family:var(--mono);font-size:.78rem;color:var(--ink-muted);background:none;border:none;cursor:pointer;padding:.6rem 1.25rem .6rem 1.5rem;transition:background .15s,color .15s;}
+.dphase:hover{background:var(--ground-warm);color:var(--ink);}
+.dphase .ddot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.drawer-divider{height:1px;background:var(--rule);margin:.4rem 0;}
+
+/* ── PHASE SUBNAV ── */
+.phase-subnav{display:none;background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:52px;z-index:90;}
+.phase-subnav.visible{display:block;}
+.psn-in{max-width:var(--mw);margin:0 auto;padding:0 var(--g);display:flex;overflow-x:auto;scrollbar-width:none;}
+.psn-in::-webkit-scrollbar{display:none;}
+.psn-btn{font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;color:var(--ink-muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;padding:.5rem .85rem;white-space:nowrap;transition:color .18s,border-color .18s;}
+.psn-btn:hover{color:var(--ink);}
+.psn-btn.on{color:var(--accent);border-bottom-color:var(--accent);}
+.psn-btn[data-t="p1"].on{color:var(--c1);border-bottom-color:var(--c1);}
+.psn-btn[data-t="p2"].on{color:var(--c2);border-bottom-color:var(--c2);}
+.psn-btn[data-t="p3"].on{color:var(--c3);border-bottom-color:var(--c3);}
+.psn-btn[data-t="p4"].on{color:var(--c4);border-bottom-color:var(--c4);}
+.psn-btn[data-t="pb"].on{color:var(--cp);border-bottom-color:var(--cp);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .top-nav{display:none;}
+  .hamburger{display:flex;}
+  .wordmark{font-size:.75rem;}
+  .hero h1{font-size:clamp(1.9rem,7vw,2.8rem);}
+  .part-title{font-size:clamp(1.4rem,5vw,2rem);}
+  .ptable{font-size:.78rem;}
+  .ptable th,.ptable td{padding:.6rem .75rem;}
+}
+
+/* ── TOP NAV ── */
+.top-nav{display:flex;align-items:center;gap:1.5rem;}
+.top-nav .nb{
+  font-family:var(--mono);font-size:.78rem;
+  color:var(--ink-muted);background:none;border:none;cursor:pointer;
+  text-transform:lowercase;letter-spacing:.04em;
+  padding:.25rem 0;
+  white-space:nowrap;
+  transition:color .18s;
+  position:relative;
+}
+.top-nav .nb:hover{color:var(--ink);}
+.top-nav .nb.on{color:var(--accent);}
+
+/* ── DROPDOWN ── */
+.dropdown{position:relative;}
+.dropdown-btn{display:flex;align-items:center;gap:.3rem;}
+.dropdown-panel{
+  display:none;
+  position:absolute;top:calc(100% + .5rem);right:0;
+  background:var(--white);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  min-width:220px;
+  z-index:200;
+  padding:.35rem 0;
+}
+.dropdown:hover .dropdown-panel,
+.dropdown.open .dropdown-panel{display:block;}
+.dropdown-item{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.55rem 1rem;
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--ink-muted);
+  background:none;border:none;
+  cursor:pointer;width:100%;text-align:left;
+  transition:background .15s,color .15s;
+}
+.dropdown-item:hover{background:var(--ground);color:var(--ink);}
+.dropdown-item.on{color:var(--ink);}
+.dropdown-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dropdown-sep{height:1px;background:var(--rule);margin:.35rem 0;}
+
+/* ── PANELS ── */
+.panel{display:none;}.panel.on{display:block;}
+
+/* ── HERO ── */
+.hero{
+  background:var(--ground-warm);
+  padding:clamp(3rem,7vh,5rem) var(--g) clamp(3rem,7vh,5rem);
+  border-bottom:2px solid var(--rule);
+  width:100%;
+}
+.hero-in{max-width:var(--mw);margin:0 auto;}
+.hero-lbl{
+  font-family:var(--mono);font-size:.68rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.hero-lbl::before{
+  content:'';display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+}
+.hero h1{
+  font-family:var(--display);
+  font-size:clamp(2.8rem,6vw,4.4rem);
+  font-weight:400;color:var(--ink);
+  line-height:1.1;letter-spacing:-0.01em;
+  margin-bottom:1.25rem;max-width:820px;
+}
+.hero-tagline{
+  font-family:var(--display);font-style:italic;
+  font-size:clamp(1.1rem,1.8vw,1.35rem);
+  color:var(--ink-muted);line-height:1.5;
+  margin-bottom:.6rem;
+}
+.hero-meta{font-family:var(--mono);font-size:.75rem;color:var(--ink-muted);letter-spacing:.04em;margin-bottom:2.5rem;}
+.hero-letter{font-size:1.05rem;color:var(--ink-light);line-height:1.75;}
+.hero-letter p+p{margin-top:.9rem;}
+.hero-letter em{font-style:italic;color:var(--ink-muted);}
+.doc-identity{display:flex;align-items:center;gap:2rem;margin-bottom:2.5rem;}
+.doc-logo{height:156px;width:auto;display:block;}
+.doc-title{font-family:var(--display);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:400;color:var(--ink);line-height:1;}
+.fable-chip{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.75rem;font-weight:500;
+  color:var(--accent);background:none;
+  border:1px solid var(--accent);border-radius:2px;
+  padding:.35rem .85rem;cursor:pointer;margin-top:.5rem;margin-bottom:2.75rem;
+  transition:background .2s,color .2s;letter-spacing:.02em;
+}
+.fable-chip:hover{background:var(--accent);color:var(--white);}
+.fable-chip .arr{display:inline-block;transition:transform .2s ease;}
+.fable-chip:hover .arr{transform:translateX(4px);}
+
+/* ── WRAP ── */
+.wrap{max-width:var(--mw);margin:0 auto;padding:clamp(2rem,5vh,3.5rem) var(--g);}
+
+/* ── SECTION LABELS ── */
+.slbl{font-family:var(--body);font-size:.75rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.4rem;}
+.stitle{font-family:var(--display);font-size:clamp(1.5rem,2.8vw,2rem);font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:.75rem;}
+.sdesc{font-size:1rem;color:var(--ink-light);max-width:640px;line-height:1.7;margin-bottom:2rem;}
+
+/* ── PART CARDS (overview) ── */
+.part-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:2.5rem;}
+.pc{background:var(--white);padding:1.5rem;border-top:3px solid transparent;cursor:pointer;transition:background .18s,transform .2s,box-shadow .2s;display:flex;flex-direction:column;}
+.pc:hover{background:var(--ground-warm);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.pc.c1{border-top-color:var(--c1);}
+.pc.c2{border-top-color:var(--c2);}
+.pc.c3{border-top-color:var(--c3);}
+.pc.c4{border-top-color:var(--c4);}
+.pc.cp{border-top-color:var(--cp);}
+.pc-title{font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--ink);margin-bottom:.4rem;line-height:1.3;}
+.pc-desc{font-size:.82rem;color:var(--ink-muted);line-height:1.5;flex:1;}
+.pc-num{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.4rem;min-height:2.1rem;}
+.pc-price{
+  font-family:var(--mono);font-size:.82rem;color:var(--ink);
+  margin-top:auto;
+  margin-left:-1.5rem;margin-right:-1.5rem;margin-bottom:-1.5rem;
+  padding:.75rem 1.5rem .9rem;
+  border-top:1px solid var(--rule);
+  background:var(--ground-warm);
+  line-height:1.6;
+}
+.pc-timing{font-size:.72rem;color:var(--ink-muted);display:block;}
+
+/* ── PART HEADER ── */
+.part-hdr{padding:clamp(2rem,5vh,3.5rem) var(--g);border-bottom:1px solid var(--rule);}
+.part-hdr-in{max-width:var(--mw);margin:0 auto;}
+.part-bar{height:3px;width:36px;border-radius:1px;margin-bottom:1.25rem;}
+.part-title{font-family:var(--display);font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:.5rem;}
+.part-tagline{font-size:1rem;color:var(--ink-muted);max-width:580px;line-height:1.6;margin-bottom:1.25rem;}
+.part-summary{font-size:1.05rem;color:var(--ink-light);max-width:620px;line-height:1.75;margin-bottom:.8rem;}
+.part-summary+.part-pills{margin-top:1.5rem;}
+.part-pills{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem;}
+.pill{font-family:var(--mono);font-size:.72rem;padding:.3rem .75rem;border:1px solid var(--rule);background:var(--ground-warm);color:var(--ink);border-radius:2px;}
+.pill-timing{font-family:var(--mono);font-size:.68rem;color:var(--ink-muted);letter-spacing:.03em;}
+
+/* ── CONTENT SECTION ── */
+.cs{padding:2rem 0;border-bottom:1px solid var(--rule);}
+.cs:last-child{border-bottom:none;}
+.cs-lbl{font-family:var(--body);font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1rem;}
+
+/* ── BEFORE/AFTER ── */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+@media(max-width:600px){.ba{grid-template-columns:1fr;}}
+.ba-col{padding:1.5rem;}
+.ba-before{background:var(--white);}
+.ba-after{background:var(--ground-warm);}
+.ba-lbl{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;}
+.ba-before .ba-lbl{color:var(--brick);}
+.ba-after .ba-lbl{color:var(--sage);}
+.ba-list{list-style:none;}
+.ba-list li{font-size:.88rem;line-height:1.55;padding:.45rem 0;border-bottom:1px solid var(--rule);display:flex;gap:.55rem;align-items:flex-start;}
+.ba-list li:last-child{border-bottom:none;}
+.ba-before .ba-list li::before{content:'×';color:var(--brick);font-weight:700;flex-shrink:0;}
+.ba-after .ba-list li::before{content:'→';color:var(--sage);flex-shrink:0;}
+
+/* ── DELIVERABLES ── */
+.dl{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.di{background:var(--white);padding:1.1rem 1.4rem;display:flex;gap:.65rem;align-items:flex-start;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:.45rem;}
+.di-text{font-size:.9rem;color:var(--ink-light);line-height:1.6;}
+
+/* ── OUTCOMES ── */
+.ol{list-style:none;}
+.ol li{padding:.65rem 0;border-bottom:1px solid var(--rule);font-size:.93rem;color:var(--ink-light);display:flex;gap:.65rem;align-items:flex-start;}
+.ol li:last-child{border-bottom:none;}
+.ol li::before{content:'→';color:var(--accent);flex-shrink:0;transition:transform .2s ease;}
+.ol li:hover::before{transform:translateX(4px);}
+
+/* ── NOT INCLUDED ── */
+.ni{background:var(--ground-warm);border:1px solid var(--rule);padding:1.1rem 1.4rem;font-size:.88rem;color:var(--ink-muted);border-radius:2px;line-height:1.6;}
+
+/* ── STAGES (Part 4) ── */
+.stages{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.stage{background:var(--white);padding:0;}
+.stage-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.25rem 1.5rem;cursor:pointer;user-select:none;}
+.stage-hdr:hover{background:var(--ground-warm);}
+.stage-lbl{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ochre);margin-bottom:.25rem;}
+.stage-name{font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--ink);line-height:1.3;}
+.stage-right{display:flex;flex-direction:column;align-items:flex-end;gap:.25rem;flex-shrink:0;}
+.stage-price{font-family:var(--mono);font-size:.75rem;color:var(--ink-muted);}
+.stage-toggle{font-family:var(--mono);font-size:.75rem;color:var(--accent);}
+.stage-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--rule);}
+.stage-body.open{display:block;}
+.stage-body p{font-size:.9rem;color:var(--ink-muted);line-height:1.6;margin-top:1rem;margin-bottom:.75rem;}
+.stage-dl{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.stage-dl li{font-size:.88rem;color:var(--ink-light);display:flex;gap:.5rem;align-items:flex-start;padding:.2rem 0;}
+.stage-dl li::before{content:'·';color:var(--ochre);font-weight:700;flex-shrink:0;}
+
+/* ── CALLOUT ── */
+.callout{border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.4rem;background:var(--white);font-size:.9rem;color:var(--ink-light);line-height:1.6;margin-top:1.5rem;}
+.callout-lbl{font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+
+/* ── PLAYBOOKS ── */
+.pb-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--rule);}
+.pb-item{display:grid;grid-template-columns:36px 1fr auto;gap:1rem;padding:.9rem 1.25rem;border-bottom:1px solid var(--rule);background:var(--white);align-items:start;}
+.pb-item:last-child{border-bottom:none;}
+.pb-num{font-family:var(--mono);font-size:.68rem;color:var(--ink-muted);padding-top:.1rem;}
+.pb-name{font-size:.9rem;color:var(--ink);font-weight:500;margin-bottom:.15rem;}
+.pb-why{font-size:.8rem;color:var(--ink-muted);line-height:1.5;}
+.badge{font-family:var(--mono);font-size:.62rem;padding:.2rem .5rem;border-radius:2px;border:1px solid;white-space:nowrap;align-self:flex-start;}
+.badge-r{color:var(--sage);border-color:var(--sage);background:rgba(90,138,58,.08);}
+.badge-s{color:var(--ink-muted);border-color:var(--rule);}
+
+/* ── TIMELINE ── */
+.tl-wrap{overflow-x:auto;}
+.tl{min-width:640px;}
+.tl-months{display:grid;grid-template-columns:150px repeat(9,1fr);gap:0;border-bottom:1px solid var(--rule);padding-bottom:.4rem;margin-bottom:.4rem;}
+.tl-mon-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);text-align:center;}
+.tl-row{display:grid;grid-template-columns:150px repeat(9,1fr);gap:0;min-height:32px;align-items:center;margin-bottom:3px;}
+.tl-row-lbl{font-size:.78rem;color:var(--ink-light);display:flex;align-items:center;gap:.35rem;padding-right:.75rem;}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tl-grid{display:contents;}
+.tl-bar{height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden;}
+.tl-now{grid-column:1/2;height:100%;border-right:2px dashed var(--accent);pointer-events:none;}
+.tl-group-lbl{font-family:var(--body);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);padding:.5rem 0 .25rem;grid-column:1/-1;}
+
+/* ── PRICING TABLE ── */
+.ptable{width:100%;border-collapse:collapse;border:1px solid var(--rule);}
+.ptable th{font-family:var(--body);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);background:var(--ground-warm);padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--rule);}
+.ptable td{padding:.85rem 1rem;border-bottom:1px solid var(--rule);vertical-align:top;font-size:.9rem;}
+.ptable tr:last-child td{border-bottom:none;}
+.ptable .pr{font-family:var(--mono);font-size:.88rem;color:var(--ink);white-space:nowrap;}
+.ptable .ti{font-family:var(--mono);font-size:.75rem;color:var(--ink-muted);}
+.ptable .pi{display:flex;align-items:center;gap:.5rem;}
+.ptable .cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ptable tr.sub td{background:var(--ground-warm);font-weight:500;}
+.ptable tr.tot td{background:var(--dark-bg);color:var(--dark-text);border-bottom:none;}
+.ptable tr.tot .pr{color:var(--ground);font-size:1rem;}
+.ptable tr.tot td:first-child{color:var(--dark-muted);font-family:var(--mono);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;}
+.ptable .note{font-size:.8rem;color:var(--ink-muted);font-style:italic;}
+
+/* ── NEXT STEPS ── */
+.ns-list{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.ns{background:var(--white);padding:1.25rem 1.5rem;display:grid;grid-template-columns:2rem 1fr;gap:1rem;align-items:start;}
+.ns-n{font-family:var(--display);font-size:1.5rem;color:var(--rule);line-height:1;}
+.ns-body{font-size:.92rem;color:var(--ink-light);line-height:1.6;}
+.ns-body strong{color:var(--ink);font-weight:500;}
+
+/* ── HOW WE WORK ── */
+.hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+@media(max-width:600px){.hw-grid{grid-template-columns:1fr;}}
+
+/* ── ADDENDUM (overview inline) ── */
+.addendum{background:var(--ground-warm);border:1px solid var(--rule);border-left:3px solid var(--sage);padding:2rem;margin-top:2.5rem;border-radius:0 2px 2px 0;}
+.addendum-lbl{font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:.5rem;}
+.addendum h3{font-family:var(--display);font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;}
+.addendum .price{font-family:var(--mono);font-size:.78rem;color:var(--ink-muted);margin-bottom:1rem;}
+
+/* ── UTILITY ── */
+p+p{margin-top:.85em;}
+strong{font-weight:500;color:var(--ink);}
+.mt1{margin-top:1rem;}.mt2{margin-top:2rem;}
+.rule-line{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+.italic{font-family:var(--display);font-style:italic;}
+
+/* ── FOOTER ── */
+footer{background:var(--dark-bg);color:var(--dark-muted);font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;padding:1.5rem var(--g);}
+footer .fi{max-width:var(--mw);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <button class="hdr-left" onclick="show('ov')" title="Overview">
+      <img class="hdr-cses-icon" src="https://images.squarespace-cdn.com/content/v1/5be365255cfd79dc41e5dc90/1549071946869-J8R3H6H6NLMKTVRXR2K3/CSES-logo-color-stacked-large-6X6%402x.png?format=750w" alt="CSES">
+      <div class="wordmark">Blueprint for Creativity</div>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="top-nav">
+      <button class="nb on" data-t="ov">overview</button>
+
+      <!-- phases dropdown -->
+      <div class="dropdown" id="phasesDropdown">
+        <button class="nb dropdown-btn" id="phasesBtn" data-role="phases-btn">phases ↓</button>
+        <div class="dropdown-panel" id="dropdownPanel">
+          <button class="dropdown-item" data-t="p1" onclick="showFromDropdown('p1')">
+            <span class="dropdown-dot" style="background:var(--steel);"></span>1 — Foundation
+          </button>
+          <button class="dropdown-item" data-t="p2" onclick="showFromDropdown('p2')">
+            <span class="dropdown-dot" style="background:var(--accent);"></span>2 — Pipeline
+          </button>
+          <button class="dropdown-item" data-t="p3" onclick="showFromDropdown('p3')">
+            <span class="dropdown-dot" style="background:var(--plum);"></span>3 — SIS
+          </button>
+          <button class="dropdown-item" data-t="p4" onclick="showFromDropdown('p4')">
+            <span class="dropdown-dot" style="background:var(--ochre);"></span>4 — Portal
+          </button>
+          <button class="dropdown-item" data-t="pb" onclick="showFromDropdown('pb')">
+            <span class="dropdown-dot" style="background:var(--cp);"></span>Playbooks
+          </button>
+          <button class="dropdown-item" data-t="addendum" onclick="showFromDropdown('addendum')">
+            <span class="dropdown-dot" style="background:var(--sage);"></span>Addendum
+          </button>
+          <div class="dropdown-sep"></div>
+          <button class="dropdown-item" onclick="showFableSection('fable-before')">
+            <span class="dropdown-dot" style="background:var(--rule);border:1px solid var(--ink-muted);"></span>The Fable — Before
+          </button>
+          <button class="dropdown-item" onclick="showFableSection('fable-after')">
+            <span class="dropdown-dot" style="background:var(--accent);"></span>The Fable — After
+          </button>
+        </div>
+      </div>
+
+      <button class="nb" data-t="sc">schedule</button>
+      <button class="nb" data-t="pr">pricing</button>
+      <button class="nb" data-t="fable">the fable</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Phase subnav -->
+<div class="phase-subnav" id="phaseSubnav">
+  <div class="psn-in">
+    <button class="psn-btn" data-t="p1" onclick="show('p1')">Foundation</button>
+    <button class="psn-btn" data-t="p2" onclick="show('p2')">Pipeline</button>
+    <button class="psn-btn" data-t="p3" onclick="show('p3')">SIS</button>
+    <button class="psn-btn" data-t="p4" onclick="show('p4')">Portal</button>
+    <button class="psn-btn" data-t="pb" onclick="show('pb')">Playbooks</button>
+    <button class="psn-btn" data-t="addendum" onclick="show('addendum')">Addendum</button>
+  </div>
+</div>
+
+<!-- Mobile drawer -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-hdr">
+    <span class="drawer-hdr-lbl">Blueprint for Creativity</span>
+    <button class="drawer-close" id="drawerClose">×</button>
+  </div>
+  <div class="drawer-body">
+    <button class="dbtn" onclick="showAndClose('ov')">overview</button>
+    <div class="drawer-divider"></div>
+    <div class="drawer-slbl">Phases</div>
+    <button class="dphase" onclick="showAndClose('p1')"><span class="ddot" style="background:var(--c1);"></span>1 — Foundation</button>
+    <button class="dphase" onclick="showAndClose('p2')"><span class="ddot" style="background:var(--c2);"></span>2 — Pipeline</button>
+    <button class="dphase" onclick="showAndClose('p3')"><span class="ddot" style="background:var(--c3);"></span>3 — SIS</button>
+    <button class="dphase" onclick="showAndClose('p4')"><span class="ddot" style="background:var(--c4);"></span>4 — Portal</button>
+    <button class="dphase" onclick="showAndClose('pb')"><span class="ddot" style="background:var(--cp);"></span>Playbooks</button>
+    <button class="dphase" onclick="showAndClose('addendum')"><span class="ddot" style="background:var(--sage);"></span>Addendum</button>
+    <div class="drawer-divider"></div>
+    <button class="dbtn" onclick="showAndClose('sc')">schedule</button>
+    <button class="dbtn" onclick="showAndClose('pr')">pricing</button>
+    <button class="dbtn" onclick="showAndClose('fable')">the fable</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════ -->
+<div id="ov" class="panel on">
+
+  <div class="hero">
+    <div class="hero-in">
+      <div class="hero-lbl">CSES Engagement Proposal · June 2026</div>
+      <h1>Infrastructure, Student Information, and Course Delivery</h1>
+      <div class="hero-tagline">A proposal for four independent layers of work — each one useful on its own, each one making the next more powerful.</div>
+      <button class="fable-chip" onclick="show('fable')">Read the Fable <span class="arr">→</span></button>
+      <div class="hero-letter">
+        <p>Liz, Hector —</p>
+        <p>Following up on our planning conversation, and folding in the Google Workspace work that's become timely since. This proposal breaks the work into four independently scoped parts that build on each other.</p>
+        <p>Each part is independently useful and separately budgeted. They are additive and cumulative — you can stop at any layer and the work to that point continues to deliver value.</p>
+        <p>Pricing reflects the sequence we discussed: Workspace and ingestion can run now, SIS in the fall, course portal phased through fall and winter toward the February 2027 cohort start. Numbers are honest ranges, not anchored quotes.</p>
+        <p><em>A note on the retainer:</em> nothing in this proposal touches the existing $500/month retainer, which continues to cover ongoing administrative work.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="slbl">The four parts</div>
+    <div class="stitle">What gets built, and in what order</div>
+
+    <div class="part-cards">
+      <div class="pc c1" onclick="show('p1')">
+        <div class="pc-num">Part 1 — Foundation</div>
+        <div class="pc-title">Modern Domain, Hosting &amp; Workspace</div>
+        <div class="pc-desc">Fixes email delivery, makes hosting free, puts the school in control of its own accounts and files. The base everything else stands on.</div>
+        <div class="pc-price">$1,800 – $3,000<span class="pc-timing">Now</span></div>
+      </div>
+      <div class="pc c2" onclick="show('p2')">
+        <div class="pc-num">Part 2 — Ingestion Pipeline</div>
+        <div class="pc-title">One intake form. One database. No more chasing.</div>
+        <div class="pc-desc">Every inquiry, registration, and payment lands in one place automatically. Status fields. Dashboard views. Quick win — most of the daily admin friction, resolved.</div>
+        <div class="pc-price">$3,000 – $5,000<span class="pc-timing">July / August 2026</span></div>
+      </div>
+      <div class="pc c3" onclick="show('p3')">
+        <div class="pc-num">Part 3 — Student Information System</div>
+        <div class="pc-title">The lifelong student record</div>
+        <div class="pc-desc">A unified record per student across every CSES program. State-audit ready. Transcripts and certificates on demand. Liz's stated top priority.</div>
+        <div class="pc-price">$8,000 – $12,000<span class="pc-timing">Fall 2026</span></div>
+      </div>
+      <div class="pc c4" onclick="show('p4')">
+        <div class="pc-num">Part 4 — Custom Course Portal</div>
+        <div class="pc-title">Branded delivery, staged to budget</div>
+        <div class="pc-desc">Four stages: foundation, Blueprint Resonance prototype, workshop pathway, and the full 350-hour portal for Cohort Z. Each stage stands on the previous.</div>
+        <div class="pc-price">$13,000 – $22,000<span class="pc-timing">Fall 2026 – Feb 2027</span></div>
+      </div>
+    </div>
+
+    <hr class="rule-line">
+
+    <div class="slbl">Why the current state is painful</div>
+    <div class="stitle">What this engagement actually fixes</div>
+    <div class="sdesc">Every problem below is a symptom of the same root: structured data collected as unstructured text, tracked in tools that weren't built for tracking, reconstructed by hand every time the question gets asked.</div>
+
+    <div class="ba">
+      <div class="ba-col ba-before">
+        <div class="ba-lbl">How it works today</div>
+        <ul class="ba-list">
+          <li>Student identity is scattered — spreadsheets, Gmail, Nancy's inbox, form submissions. No single source of truth.</li>
+          <li>The email is the form. The inbox is the database. You are the query engine.</li>
+          <li>Payment and deposit status require opening PayPal and cross-referencing manually.</li>
+          <li>Confirmation replies sit in separate threads with no connection to enrollment or payment records.</li>
+          <li>Collecting intentions means creating an orphan document each time — no connection to anything else.</li>
+          <li>Nothing is queryable. The master spreadsheet can only sort and scroll.</li>
+          <li>No persistent record of what a student has completed.</li>
+          <li>State audit required pulling from a check-mark sheet. Transcripts are manual lifts.</li>
+          <li>Every workshop rebuilds its tracking from scratch. None of it carries forward.</li>
+          <li>Access is all-or-nothing. No role-based visibility.</li>
+        </ul>
+      </div>
+      <div class="ba-col ba-after">
+        <div class="ba-lbl">How it works after this engagement</div>
+        <ul class="ba-list">
+          <li>Every person has one record. Name, email, intake date, history with CSES — one source, always current.</li>
+          <li>A form does the parsing. Responses land sorted, countable, and connected to the right record.</li>
+          <li>Payment status is a field, updated automatically. Visible at a glance.</li>
+          <li>Confirmations update the record directly. Yes-count is always current. Waitlist moves automatically.</li>
+          <li>Intention is a field on the student record, next to enrollment and payment. Kate gets a filtered column view.</li>
+          <li>The database is actually a database. "Who confirmed but hasn't paid?" is a filter, not a tally.</li>
+          <li>Completion is recorded per student: cohort, modules, hours, requirements, certificate earned.</li>
+          <li>Transcripts and state reports generate from the underlying data. Audit-ready.</li>
+          <li>The Working with Babies form runs each time it runs. Responses go to the same table. Counts update.</li>
+          <li>Liz and Nancy see everything. TAs see their cohort. Students see their own records.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule-line">
+
+    <div class="slbl">Next steps</div>
+    <div class="stitle">How to move forward</div>
+    <div class="ns-list mt2">
+      <div class="ns"><div class="ns-n">1</div><div class="ns-body"><strong>Review this proposal.</strong> Take whatever time you need. Each tab above has the full scope for its part.</div></div>
+      <div class="ns"><div class="ns-n">2</div><div class="ns-body"><strong>Tell us which parts to scope formally.</strong> Part 1 is the natural first commitment — it's already in motion. Part 2 can run alongside it. We scope whichever you green-light.</div></div>
+      <div class="ns"><div class="ns-n">3</div><div class="ns-body"><strong>We send a scope-of-work agreement</strong> for each part you approve — concrete deliverables, ceiling, timeline. You sign and we begin.</div></div>
+      <div class="ns"><div class="ns-n">4</div><div class="ns-body"><strong>Quick logistical things (no formal scoping needed):</strong> Nancy and Liz find a short window for the send-as / account configuration. The Gmail inbox playbook and Drive storage playbook get drafted under the retainer.</div></div>
+    </div>
+
+    <hr class="rule-line">
+
+    <div class="slbl">How we work</div>
+    <div class="hw-grid">
+      <div>
+        <div class="cs-lbl">Pricing structure</div>
+        <p>Each part is a separate scope-of-work agreement. The agreement specifies concrete deliverables, an hourly rate (Tech support $100/hr · Consulting $150/hr), and a not-to-exceed ceiling at the upper end of the range.</p>
+        <p>If actual hours come in under the ceiling, you pay actual cost. The ceiling protects you from surprises.</p>
+      </div>
+      <div>
+        <div class="cs-lbl">Ownership &amp; documentation</div>
+        <p>Everything we build is documented well enough that any competent developer could pick it up and continue. The code is open and standard. There's no proprietary trap.</p>
+        <p>Nancy is the primary point of contact for ongoing engagement. Andrew handles the technical work and joins for design and architecture conversations.</p>
+      </div>
+    </div>
+
+    <hr class="rule-line">
+    <div class="slbl">Additional Scope</div>
+
+    <div class="addendum mt2" style="cursor:pointer;border-left-color:var(--cp);" onclick="show('pb')">
+      <div class="addendum-lbl" style="color:var(--cp);">Operational playbooks</div>
+      <h3>Making sure no process lives only in someone's head</h3>
+      <p style="font-size:.9rem;color:var(--ink-muted);line-height:1.6;margin-top:.5rem;">Ten short documents — inbox triage, new inquiry intake, module rollout, recording workflow, and more — drafted with the people who run each process, reviewed by Liz. Scoped one at a time as you feel the need. Two lightest fit inside the existing retainer. <span style="color:var(--accent);font-family:var(--mono);font-size:.75rem;">View all playbooks →</span></p>
+    </div>
+
+    <div class="addendum mt2" style="cursor:pointer;" onclick="show('addendum')">
+      <div class="addendum-lbl">Optional addendum — Available now</div>
+      <h3>Blueprint Resonance — Interim Page</h3>
+      <div class="price">$800 – $1,500 · About a week · A bridge, not the final build</div>
+      <p style="font-size:.9rem;color:var(--ink-muted);line-height:1.6;">A simple, presentable page hosting BR recordings and materials — built fresh (not on Squarespace), with basic access protection, hosted free on the school's own Cloudflare account. Gets students access immediately. When Part 4 Stage B ships, this interim page is retired. <span style="color:var(--accent);font-family:var(--mono);font-size:.75rem;">See the full addendum →</span></p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PART 1 — FOUNDATION
+══════════════════════════════════════════════ -->
+<div id="p1" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--c1);"></div>
+      <div class="slbl">Part 1</div>
+      <div class="part-title">Modern Domain, Hosting &amp; Google Workspace</div>
+      <p class="part-summary">Before anything else can work, the school needs to own its own digital infrastructure. Right now, some emails bounce before they reach students. Files live in someone's personal account instead of belonging to the school. And there's no clean way to give a TA or new hire access to just what they need — it's all or nothing.</p>
+      <p class="part-summary">This part fixes all of that. It moves CSES onto a modern, reliable foundation it actually controls — email that arrives, a shared drive that belongs to the school, and access that can be managed cleanly. It also makes website hosting free. Everything that comes after gets faster and cheaper once this is in place.</p>
+      <div class="part-pills">
+        <span class="pill">$1,800 – $3,000</span>
+        <span class="pill-timing">About one week · Recommended first step</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">The problem this solves</div>
+      <div class="ba">
+        <div class="ba-col ba-before">
+          <div class="ba-lbl">Today</div>
+          <ul class="ba-list">
+            <li>Email bounces or gets blocked by certain providers — the authentication records that prove "this really is energyschool.com" are missing or misconfigured.</li>
+            <li>Everything runs on one personal account with one login. No way to give someone access to just the folder they need.</li>
+            <li>Aging hosting infrastructure — harder to manage, less secure, costs more than it needs to.</li>
+            <li>Files belong to an individual, not to the institution. If that person leaves, files walk out.</li>
+          </ul>
+        </div>
+        <div class="ba-col ba-after">
+          <div class="ba-lbl">After Part 1</div>
+          <ul class="ba-list">
+            <li>Email reliably reaches inboxes. Authentication records set up properly and easy to manage going forward.</li>
+            <li>The school controls its own accounts and domain — add people, remove people, reset access from one place.</li>
+            <li>Website hosting is free, on a faster and more secure platform owned by CSES.</li>
+            <li>Files and infrastructure belong to CSES permanently. No single-person dependency.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Piece A — Modern domain &amp; hosting foundation</div>
+      <p style="font-size:.92rem;color:var(--ink-muted);max-width:640px;line-height:1.65;margin-bottom:1.25rem;">Move the school's domain settings to Cloudflare — modern, free, and far more reliable — owned by a CSES account with Andrew as a permissioned admin.</p>
+      <ul class="dl">
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">DNS and email authentication records (SPF, DKIM, DMARC) properly configured — fixes bouncing at the root</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Website hosting moved to Cloudflare Pages — free, fast, more secure than current paid hosting</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Domain registrar account owned by CSES; Andrew maintains through delegated admin access</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Carefully managed cutover — brief, coordinated, seamless if done right</div></li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Piece B — Google Workspace &amp; Drive</div>
+      <ul class="dl">
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Google Workspace set up on energyschool.com — the real business version, tied to the domain</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Account structure: base institutional account plus working account for Administrative Director</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Shared Drive owned by the organization — files belong to CSES, not any individual</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Access tiers established: read-only by default, scoped to what each person needs</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Drop zone for incoming files — teachers hand in recordings without a login or storage burden</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Storage playbook — folder structure, naming conventions, access map — documented</div></li>
+        <li class="di"><div class="dot" style="background:var(--c1);"></div><div class="di-text">Basic training so the team can operate it confidently</div></li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What changes for you</div>
+      <ul class="ol">
+        <li>Email reliably reaches inboxes instead of bouncing</li>
+        <li>Website hosting becomes free, on a faster and more secure platform</li>
+        <li>The school controls its own accounts and domain — no single-person dependency</li>
+        <li>Access is scoped to what each person needs, read-only by default</li>
+        <li>Files and infrastructure are owned by CSES permanently</li>
+        <li>Every future project gets faster and cheaper because it's building on solid ground</li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Cost notes</div>
+      <p style="font-size:.9rem;color:var(--ink-muted);max-width:640px;line-height:1.65;">The $1,800–$3,000 covers the whole foundation. Domain/hosting move is roughly $500–$800 of it; Workspace setup, Shared Drive, access rules, skeleton playbook, and training make up the remainder.</p>
+      <p style="font-size:.9rem;color:var(--ink-muted);max-width:640px;line-height:1.65;margin-top:.75rem;">CSES pays Google directly for Workspace — Business Starter runs about $7/user/month (~$168/year for two accounts). The domain/hosting platform itself is free. Net effect: the school spends less on infrastructure than it does today, on something far better.</p>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What this does not include (yet)</div>
+      <div class="ni">Migrating the existing pile of files into the new Drive structure. This is deliberately deferred — migrating before the structure and rules are settled means organizing into a system that's still being defined, likely doing it twice. Better to let the new structure prove itself with new material first, then bring the old material across. Rough range when we get there: $2,000 – $4,000, scoped once we can see the actual pile.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PART 2 — INGESTION PIPELINE
+══════════════════════════════════════════════ -->
+<div id="p2" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--c2);"></div>
+      <div class="slbl">Part 2</div>
+      <div class="part-title">Ingestion Pipeline</div>
+      <p class="part-summary">Every time someone signs up for a class, expresses interest in a workshop, or asks about the program, that information arrives scattered — an email here, a form there, a PayPal notification somewhere else. Nancy pulls it together by hand each time, rebuilding the same tally from scratch every time a new workshop runs.</p>
+      <p class="part-summary">This part puts a single front door on the school. Every inquiry lands in one place, already organized. You can see at a glance who's confirmed, who's paid, who needs a follow-up — without opening twelve tabs. PayPal gets fixed at the same time. And the next workshop? The structure is already there.</p>
+      <div class="part-pills">
+        <span class="pill">$3,000 – $5,000</span>
+        <span class="pill-timing">1–2 weeks · July / August 2026 · Can run alongside Part 1</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">The problem in plain terms</div>
+      <p style="font-size:.95rem;color:var(--ink-light);max-width:640px;line-height:1.7;margin-bottom:1.5rem;"><span class="italic">The email is the form. The inbox is the database. You are the query engine.</span> There's no structure on the way in, so structure has to be imposed by hand on the way out.</p>
+      <div class="ba">
+        <div class="ba-col ba-before">
+          <div class="ba-lbl">How it works today</div>
+          <ul class="ba-list">
+            <li>Information arrives through six channels. Some lands in spreadsheets. Some sits in inboxes. Some gets missed.</li>
+            <li>To know the attending count, you open thirty messages and tally by hand.</li>
+            <li>To move the waitlist, you count the NOs separately, figure out how far down to go, and draft individual emails.</li>
+            <li>Every reply arrives as free text in its own thread. Intentions require copying thirty paragraphs into a separate document.</li>
+            <li>Replies trickle in over days — no current count, only a snapshot you rebuild each time you look.</li>
+            <li>Payment status requires opening PayPal and cross-referencing the spreadsheet manually.</li>
+            <li>PayPal itself charges wrong: bad sales tax on deposits, shipping costs on a course.</li>
+            <li>Every workshop rebuilds the tally from scratch. The work is not reusable.</li>
+          </ul>
+        </div>
+        <div class="ba-col ba-after">
+          <div class="ba-lbl">After Part 2</div>
+          <ul class="ba-list">
+            <li>One canonical intake form linked from every place inquiries originate.</li>
+            <li>Attending is a yes/no field. Count updates the moment a form is submitted.</li>
+            <li>Waitlist movement is tracked automatically. You know where you stand without a tally.</li>
+            <li>Intentions arrive in their own column — readable by Kate without any copying or pasting.</li>
+            <li>Responses land already sorted: yes-count against capacity, no-count drives the waitlist.</li>
+            <li>Payment status is a field. Updated automatically when PayPal reports a transaction.</li>
+            <li>PayPal configuration audited and fixed as part of this work.</li>
+            <li>The Working with Babies form runs every time you run Working with Babies. Same table. Same counts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What gets built</div>
+      <ul class="dl">
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">One canonical intake form linked from every place inquiries originate — website, email signatures, Zoom registration follow-ups</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">Central database (Baserow-based) where every inquiry, registration, and payment lands automatically</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">Status fields per record: new → in conversation → ready to register → registered → paid → in cohort → declined</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">Dashboard view for the daily question: "What needs attention today?"</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">Dashboard view for the weekly question: "Who hasn't followed up on what we sent?"</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">PayPal integration audit: broken sales tax on deposits and wrong shipping costs — fixed alongside the rebuild</div></li>
+        <li class="di"><div class="dot" style="background:var(--c2);"></div><div class="di-text">One-page playbook explaining how it works and how to use it</div></li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What changes for you</div>
+      <ul class="ol">
+        <li>You stop chasing information across systems. The information comes to one place.</li>
+        <li>Email becomes about real questions from real people, not administrative tracking.</li>
+        <li>Nothing falls through the cracks — every inquiry is captured at intake.</li>
+        <li>Hector's PayPal-charges-wrong-thing irritation goes away.</li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What it does not do (yet)</div>
+      <div class="ni">This is the intake layer. It captures and routes. It does not yet track student progress through coursework or hold the long-term record of every program a student has taken. That's Part 3. The bridge version for collection tasks (Google Forms → Sheets) is free and deployable this week for Working with Babies — but the roster reconciliation problem (is this reply from a deposit-paid student?) only resolves when the SIS gives every student a known record.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PART 3 — SIS
+══════════════════════════════════════════════ -->
+<div id="p3" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--c3);"></div>
+      <div class="slbl">Part 3</div>
+      <div class="part-title">Student Information System</div>
+      <p class="part-summary">CSES has been tracking student progress across spreadsheets, attendance sheets, and people's memories for years. It works — until the state auditor asks for module-by-module records, or a student needs a transcript, or someone wants to know which alumni are eligible for advanced training. Each of those questions takes real time to answer manually.</p>
+      <p class="part-summary">This part builds the authoritative record of who studied what at CSES. Transcripts in minutes. State reports on demand. Liz can answer "what has this student completed?" without asking Nancy to dig through files. It's the foundation that lets the school operate like the serious institution it already is.</p>
+      <div class="part-pills">
+        <span class="pill">$8,000 – $12,000</span>
+        <span class="pill-timing">Fall 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">The problem this solves</div>
+      <div class="ba">
+        <div class="ba-col ba-before">
+          <div class="ba-lbl">Today</div>
+          <ul class="ba-list">
+            <li>Tracking what a student has completed happens across separate spreadsheets, attendance sheets, and people's heads.</li>
+            <li>The state auditor's request — "show me this student's attendance per module" — required pulling from a check-mark sheet.</li>
+            <li>Transcripts, certificates, and prerequisite verification are all manual lifts.</li>
+            <li>Nothing is queryable: "show me everyone who completed cranial but hasn't done Polarity" requires manual cross-referencing.</li>
+            <li>Role-based access doesn't exist. All-or-nothing logins.</li>
+            <li>Students have no visibility into their own records.</li>
+          </ul>
+        </div>
+        <div class="ba-col ba-after">
+          <div class="ba-lbl">After Part 3</div>
+          <ul class="ba-list">
+            <li>One record per student covering every CSES program — BCST, Polarity, workshops, continuing ed.</li>
+            <li>State audit: run a report. Every module, every attendance record, exportable in formats the state accepts.</li>
+            <li>Transcripts and certificates generated from the underlying data. Designed to your specs.</li>
+            <li>"Show me everyone who completed cranial but hasn't done Polarity" is a filter, not a project.</li>
+            <li>Liz/Nancy see everything. TAs see their cohort. Students see their own progress.</li>
+            <li>Students can check their hours, status, and what they've completed without asking Nancy.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What gets built</div>
+      <ul class="dl">
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Unified record per student covering every program at CSES — BCST, Polarity, workshops, continuing ed</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Mapping to the Colorado-approved 350-hour syllabus: drawings, writings, supervision hours, sessions received, in-person assessments, the cranial nerve project — every requirement countable per student</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Hours accumulated across programs, prerequisites met, certifications earned, standing status</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Transcript and certificate generation — designed to your specs, populated from the underlying data, exportable in formats the state accepts</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Role-based views: Liz/Nancy as registrars see everything; TAs see their cohort; students see their own progress</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Reports for state audits, internal planning, and student conversations</div></li>
+        <li class="di"><div class="dot" style="background:var(--c3);"></div><div class="di-text">Documentation and training so you can operate it without us</div></li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Why this is the highest-leverage layer</div>
+      <ul class="ol">
+        <li><strong>Independent of the LMS decision.</strong> Whether you ever build a course delivery portal or stay with what you have, the SIS transforms how the school operates day to day.</li>
+        <li><strong>What the state actually wants.</strong> They've been patient with the spreadsheet approach. They will not be forever, especially as the school grows.</li>
+        <li><strong>Frees your and Nancy's time immediately.</strong> The administrative weight of tracking, reporting, and answering "what's this student's status?" gets absorbed into the system.</li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What's already done</div>
+      <div class="callout">
+        <div class="callout-lbl">Significant foundation work is already in the bank</div>
+        <p>The Colorado-approved syllabus IS the data model — every requirement, every assessment, every hour breakdown. Most schools spend significant consulting fees getting to that document. CSES already has it, and the state's response to it was extraordinary. Building the SIS on top of it is a straightforward implementation, not a discovery exercise.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PART 4 — CUSTOM COURSE PORTAL
+══════════════════════════════════════════════ -->
+<div id="p4" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--c4);"></div>
+      <div class="slbl">Part 4</div>
+      <div class="part-title">Custom Course Portal</div>
+      <p class="part-summary">Students in the 350-hour program currently access their materials through Squarespace pages that are hard to maintain and don't reflect the depth of the curriculum. There's no progress tracking, no clean way for TAs to see their cohort, and no place for new standalone content to live without a rebuild every time.</p>
+      <p class="part-summary">This part builds a proper home for course delivery — branded, organized, connected to student records, and designed to grow. It's broken into four stages so you get real value at each step, starting with Blueprint Resonance students getting a real portal right away. By the time Cohort Z begins in February, the full 350-hour experience is waiting for them.</p>
+      <div class="part-tagline">Four stages that build on each other. You can pause between stages, defer Stage D, or accelerate — but you cannot skip Stage A.</div>
+      <div class="part-pills">
+        <span class="pill">$13,000 – $22,000 cumulative</span>
+        <span class="pill-timing">Fall 2026 through February 2027</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">The four stages</div>
+      <div class="stages">
+
+        <div class="stage">
+          <div class="stage-hdr" onclick="toggleStage(this)">
+            <div class="stage-title-group">
+              <div class="stage-lbl">Stage A — Foundation</div>
+              <div class="stage-name">The skeleton. Built once, used forever.</div>
+            </div>
+            <div class="stage-right">
+              <div class="stage-price">$5,000 – $7,000 · ~3 weeks · Fall 2026</div>
+              <div class="stage-toggle">+ expand</div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>The rails that make every subsequent stage fast and cheap. No portal is visible to students after Stage A — but the foundation is laid. Stages B, C, and D become quick to deliver.</p>
+            <ul class="stage-dl">
+              <li>Authentication system — students log in, identity verified, sessions managed</li>
+              <li>User roles and permissions: student, TA, instructor, admin</li>
+              <li>Connection to the SIS so login knows who you are and what you're enrolled in</li>
+              <li>Design system: typography, palette, components — built from scratch, looks like CSES</li>
+              <li>Admin scaffolding so adding content doesn't require code</li>
+              <li>Hosting and deployment infrastructure (~$50–100/month ongoing)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-hdr" onclick="toggleStage(this)">
+            <div class="stage-title-group">
+              <div class="stage-lbl">Stage B — Blueprint Resonance Prototype</div>
+              <div class="stage-name">First visible portal. Real content, real students.</div>
+            </div>
+            <div class="stage-right">
+              <div class="stage-price">$1,500 – $3,000 · 1–2 weeks · Fall 2026</div>
+              <div class="stage-toggle">+ expand</div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>Plug existing Blueprint Resonance recordings into the foundation. Current BR students get a real, branded place to access their materials — a meaningful upgrade from the current arrangement, and the first chance to feel the design and flow in practice.</p>
+            <ul class="stage-dl">
+              <li>Per-session pages with recordings, materials, and associated documents</li>
+              <li>Access control limited to the current BR cohort</li>
+              <li>Clean navigation, mobile-friendly, fully designed</li>
+              <li>Low risk, fast to build — BR content is already filmed and edited. Gets students value immediately.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-hdr" onclick="toggleStage(this)">
+            <div class="stage-title-group">
+              <div class="stage-lbl">Stage C — Workshop / Single-Lecture Pathway</div>
+              <div class="stage-name">Self-service publishing for simple content.</div>
+            </div>
+            <div class="stage-right">
+              <div class="stage-price">$1,500 – $3,000 · 1–2 weeks · Winter 2026/2027</div>
+              <div class="stage-toggle">+ expand</div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>A self-service upload pathway for standalone content — recorded anatomy lectures, two-hour talks, individual workshops. From day one of this stage, you can publish new content without us.</p>
+            <ul class="stage-dl">
+              <li>Admin form: upload a video, add a description and slides, set a price, publish</li>
+              <li>Public-facing course catalog or store integration — students can browse and purchase</li>
+              <li>Payment integration (Stripe or extension of PayPal) with proper tax handling</li>
+              <li>Access granted automatically on purchase; content viewable on the portal</li>
+              <li>Anna records a 90-minute talk, you film it, edit it, upload it — fifteen minutes later it's for sale</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-hdr" onclick="toggleStage(this)">
+            <div class="stage-title-group">
+              <div class="stage-lbl">Stage D — 350-Hour Course Portal</div>
+              <div class="stage-name">Full portal for Cohort Z. Targeting February 2027.</div>
+            </div>
+            <div class="stage-right">
+              <div class="stage-price">$5,000 – $9,000 · 4–6 weeks · Early 2027</div>
+              <div class="stage-toggle">+ expand</div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>The full custom portal for the BCST 350-hour course, designed around Cohort Z's needs and tied to the state-approved syllabus. This is where the real value of going custom over Teachable shows up — the learning design work is what makes the difference between "videos in folders" and a course that actually teaches.</p>
+            <ul class="stage-dl">
+              <li>Per-module pages: recordings, materials, hand positions, homework, downloads</li>
+              <li>Embedded learning design — students can locate themselves in the broader work, not just access files</li>
+              <li>Student-facing progress tracking tied to SIS data: what's submitted, what's outstanding, where they stand</li>
+              <li>Cohort-specific access — Cohort Z is gated; future cohorts spin up from templates</li>
+              <li>TA-facing views for module preparation, attendance, materials handoff</li>
+              <li>Migration of existing Squarespace Cohort Z content into the new system</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Each additional cohort or class thereafter</div>
+      <div class="callout">
+        <div class="callout-lbl">$2,000 – $4,000 · About one week · Templated</div>
+        <p>Once Stage D is built, spinning up Cohort AA, Cohort BB, or a future Polarity cohort is fast — the foundation, design system, and course template are done. The marginal work is content migration and any cohort-specific adjustments.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ADDENDUM
+══════════════════════════════════════════════ -->
+<div id="addendum" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--sage);"></div>
+      <div class="slbl">Optional Addendum</div>
+      <div class="part-title">Blueprint Resonance — Interim Page</div>
+      <p class="part-summary">Blueprint Resonance students currently have no clean place to access their recordings and materials. The Squarespace pages that host them are clunky to maintain, don't look like the school, and provide no access protection. The interim page solves that problem now, without waiting for Part 4 Stage B to arrive.</p>
+      <p class="part-summary">This is deliberately designed as throwaway work — a bridge, not the final build. We'd rather be upfront about that than dress it up as something permanent. When Part 4 Stage B ships, this interim page is retired. The infrastructure it sits on — the Cloudflare account, the access approach — carries forward even when the page doesn't.</p>
+      <div class="part-pills">
+        <span class="pill">$800 – $1,500</span>
+        <span class="pill-timing">About a week · Available now · A bridge, not the final build</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">What this is</div>
+      <p style="font-size:.95rem;color:var(--ink-light);max-width:640px;line-height:1.7;margin-bottom:1.5rem;">A simple, presentable page hosting BR recordings and materials — built fresh (not on Squarespace), with basic access protection, hosted free on the school's own Cloudflare account. Gets students access immediately.</p>
+      <ul class="dl">
+        <li class="di"><div class="dot" style="background:var(--sage);"></div><div class="di-text">Clean, branded page for BR recordings and materials — not Squarespace, not cobbled together</div></li>
+        <li class="di"><div class="dot" style="background:var(--sage);"></div><div class="di-text">Basic access protection — students get in, the public doesn't</div></li>
+        <li class="di"><div class="dot" style="background:var(--sage);"></div><div class="di-text">Hosted free on CSES's own Cloudflare account — no new monthly cost</div></li>
+        <li class="di"><div class="dot" style="background:var(--sage);"></div><div class="di-text">Built fresh, not on Squarespace — easier to maintain and update</div></li>
+        <li class="di"><div class="dot" style="background:var(--sage);"></div><div class="di-text">Gets students access immediately, right now, without waiting for Part 4</div></li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">What this is not</div>
+      <div class="ni">This is not the long-term solution. It is explicitly a bridge. When Part 4 Stage B ships — the Blueprint Resonance prototype built on the real portal foundation — this interim page is retired and students move to the proper portal. The infrastructure (Cloudflare hosting, domain configuration) carries forward. The page itself is throwaway, and we're saying so up front.</div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Why do this at all</div>
+      <ul class="ol">
+        <li>BR students deserve a better experience now, not when Part 4 Stage B is ready months from now</li>
+        <li>It's low-cost relative to the immediate value — about a week of work</li>
+        <li>It lets the school practice managing content on a real, school-owned platform before the full portal arrives</li>
+        <li>The Cloudflare infrastructure it uses is the same infrastructure Part 1 builds — nothing is wasted</li>
+      </ul>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Relationship to Part 4</div>
+      <div class="callout">
+        <div class="callout-lbl">This is independent of the Part 4 decision</div>
+        <p>You can commission this interim page whether or not you proceed with Part 4. It stands alone. If Part 4 happens, Stage B supersedes it. If Part 4 doesn't happen, the interim page continues to serve BR students until you decide otherwise. The only thing you can't do is use this as a substitute for Part 4 Stage A — the real portal foundation is a different and more substantial piece of work.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PLAYBOOKS
+══════════════════════════════════════════════ -->
+<div id="pb" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--cp);"></div>
+      <div class="slbl">Operational Playbooks</div>
+      <div class="part-title">Making sure no recurring process lives in someone's head</div>
+      <p class="part-summary">A lot of what keeps CSES running lives in two or three people's heads. The right way to handle a new inquiry, who reviews what before it goes out, how a module rollout actually unfolds — these processes work because the right people are around and paying attention. But that's not the same as the school knowing how to do them.</p>
+      <p class="part-summary">Playbooks write it down. Not in a bureaucratic way — in a clear, one-page way that anyone can follow the next time things get busy or a new person needs to step in. Each one is drafted with the people who currently run the process and reviewed by Liz before it goes into use. The goal isn't documentation for its own sake. It's making sure the school can run confidently even when the people who know everything are having a normal human day.</p>
+      <div class="part-tagline">Each playbook is a one-page document covering who does what, in what order, who reviews, what gets approved by whom, and how it gets archived. Scoped one at a time, as you feel the need.</div>
+      <div class="part-pills">
+        <span class="pill">$300 – $1,000 per playbook</span>
+        <span class="pill-timing">Drafted progressively · Two lightest fit inside the retainer</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="cs">
+      <div class="cs-lbl">Why playbooks matter</div>
+      <p style="font-size:.95rem;color:var(--ink-light);max-width:640px;line-height:1.7;">Each playbook isn't just documentation. It's interviewing whoever currently runs the process, designing the decision points and review structure, iterating with you, and supporting initial use. Once a playbook exists, the work it codifies stops requiring Liz's brain.</p>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">The list, in priority order</div>
+      <div class="pb-list mt2">
+        <div class="pb-item">
+          <div class="pb-num">01</div>
+          <div><div class="pb-name">Inbox triage &amp; Gmail labels</div><div class="pb-why">Already started. Codifies the rules so anyone using the inbox knows what gets labeled what.</div></div>
+          <div><span class="badge badge-r">retainer</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">02</div>
+          <div><div class="pb-name">Email blast / newsletter</div><div class="pb-why">Draft → content review → list review → Liz sign-off → send → archive. The recent send made the case.</div></div>
+          <div><span class="badge badge-s">$300–500</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">03</div>
+          <div><div class="pb-name">New inquiry intake</div><div class="pb-why">When someone expresses interest, what happens. Tied to the Part 2 pipeline once that's live.</div></div>
+          <div><span class="badge badge-s">$400–600</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">04</div>
+          <div><div class="pb-name">Application processing</div><div class="pb-why">Review, conversation if needed, accept or decline, payment, onboarding. Where Liz's eyes are required vs. where Nancy proceeds.</div></div>
+          <div><span class="badge badge-s">$500–800</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">05</div>
+          <div><div class="pb-name">Workshop / CE registration</div><div class="pb-why">From flier going out to attendees being welcomed. Repeats per workshop; document once.</div></div>
+          <div><span class="badge badge-s">$400–600</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">06</div>
+          <div><div class="pb-name">Module rollout</div><div class="pb-why">Pre-module student communication, materials prep, TA coordination, recording workflow, post-module follow-up.</div></div>
+          <div><span class="badge badge-s">$600–1,000</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">07</div>
+          <div><div class="pb-name">Recording workflow</div><div class="pb-why">Zoom export → conversion → tagging → archive → upload. Already informally exists; documented becomes resilient.</div></div>
+          <div><span class="badge badge-s">$300–500</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">08</div>
+          <div><div class="pb-name">TA coordination</div><div class="pb-why">Per-module TA roles, attendance, materials, recording responsibilities. Connects to the policy work already started.</div></div>
+          <div><span class="badge badge-s">$400–700</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">09</div>
+          <div><div class="pb-name">Templated student communication</div><div class="pb-why">Welcome emails, payment reminders, schedule confirmations, certification notices. Drafted once, used many times.</div></div>
+          <div><span class="badge badge-r">retainer</span></div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-num">10</div>
+          <div><div class="pb-name">Transcript &amp; certificate issuance</div><div class="pb-why">When and how state-compliant documents get generated. Becomes mostly automated once Part 3 SIS is live.</div></div>
+          <div><span class="badge badge-s">$500–800</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <div class="cs-lbl">Pricing approach</div>
+      <p style="font-size:.9rem;color:var(--ink-muted);max-width:640px;line-height:1.65;">Pay-as-you-need-them. No package, no upfront commitment. You commit only to playbooks you actually want, when you actually want them. The two lightest (#1 Gmail labels, already in progress, and #9 Templated communications) fit inside the existing retainer. For the rest, each is scoped individually — typically $300–$1,000 depending on complexity.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCHEDULE
+══════════════════════════════════════════════ -->
+<div id="sc" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--ink-muted);"></div>
+      <div class="slbl">Suggested Sequence</div>
+      <div class="part-title">When things happen, and why in this order</div>
+      <p class="part-summary">The four parts are designed to build on each other, but each one delivers value on its own. You don't have to commit to the whole thing to start — and nothing you do in an earlier part is wasted if you add a later one. The sequence below is what we'd recommend based on what's most urgent, what's most leveraged, and what makes sense given the house construction timeline.</p>
+      <p class="part-summary">Sequencing is a recommendation, not a constraint. Stages can shift if your timeline does.</p>
+      <div class="part-pills">
+        <span class="pill-timing">June 2026 → February 2027</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="tl-wrap mt2">
+      <div class="tl">
+        <div class="tl-months">
+          <div></div>
+          <div class="tl-mon-lbl">Jun</div>
+          <div class="tl-mon-lbl">Jul</div>
+          <div class="tl-mon-lbl">Aug</div>
+          <div class="tl-mon-lbl">Sep</div>
+          <div class="tl-mon-lbl">Oct</div>
+          <div class="tl-mon-lbl">Nov</div>
+          <div class="tl-mon-lbl">Dec</div>
+          <div class="tl-mon-lbl">Jan</div>
+          <div class="tl-mon-lbl">Feb</div>
+        </div>
+
+        <!-- BR Interim: Now (Jun) → col 2/3 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--sage);"></div>BR Interim Page</div>
+          <div style="grid-column:2/3;background:var(--sage);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.9);">~1 week · now</div>
+        </div>
+
+        <!-- Part 1: Jun–Jul → cols 2/4 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c1);"></div>Part 1 — Foundation</div>
+          <div style="grid-column:2/4;background:var(--c1);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.85);">~1 week</div>
+        </div>
+
+        <!-- Part 2: Jul–Aug → cols 3/5 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c2);"></div>Part 2 — Pipeline</div>
+          <div style="grid-column:3/5;background:var(--c2);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.85);">1–2 weeks</div>
+        </div>
+
+        <!-- Part 3: Sep–Dec → cols 5/9 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c3);"></div>Part 3 — SIS</div>
+          <div style="grid-column:5/9;background:var(--c3);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.85);">Fall 2026</div>
+        </div>
+
+        <!-- Stage A: Sep–Oct → cols 5/7 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c4);"></div>Stage A — Foundation</div>
+          <div style="grid-column:5/7;background:var(--c4);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.85);">~3 weeks</div>
+        </div>
+
+        <!-- Stage B: Oct–Nov → cols 6/8 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c4);"></div>Stage B — BR Prototype</div>
+          <div style="grid-column:6/8;background:rgba(184,134,11,.75);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.9);">1–2 weeks</div>
+        </div>
+
+        <!-- Stage C: Dec–Jan → cols 8/10 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c4);"></div>Stage C — Workshop</div>
+          <div style="grid-column:8/10;background:rgba(184,134,11,.55);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.9);">1–2 weeks</div>
+        </div>
+
+        <!-- Stage D: Jan–Feb → cols 9/11 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--c4);"></div>Stage D — 350-hr Portal</div>
+          <div style="grid-column:9/11;background:rgba(184,134,11,.38);height:22px;border-radius:2px;display:flex;align-items:center;padding:0 .5rem;font-family:var(--mono);font-size:.58rem;color:var(--ink);">4–6 wks → Feb</div>
+        </div>
+
+        <!-- Playbooks: all months → cols 2/11 -->
+        <div class="tl-row">
+          <div class="tl-row-lbl"><div class="tl-dot" style="background:var(--cp);"></div>Playbooks (ongoing)</div>
+          <div style="grid-column:2/11;background:repeating-linear-gradient(90deg,var(--cp) 0,var(--cp) 8px,transparent 8px,transparent 16px);height:4px;border-radius:2px;align-self:center;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="rule-line">
+
+    <div class="slbl">Why this order</div>
+    <div class="ns-list">
+      <div class="ns"><div class="ns-n" style="font-size:1rem;color:var(--c1);font-family:var(--mono);">P1</div><div class="ns-body"><strong>Foundation first, now.</strong> Fixes email delivery and the shared-login problem immediately. Timely — the school is mid-transition. Everything else moves faster once it's done.</div></div>
+      <div class="ns"><div class="ns-n" style="font-size:1rem;color:var(--c2);font-family:var(--mono);">P2</div><div class="ns-body"><strong>Pipeline is the quick win.</strong> Can run alongside Part 1. Frees admin time immediately. Provides the intake layer that Part 3 builds on.</div></div>
+      <div class="ns"><div class="ns-n" style="font-size:1rem;color:var(--c3);font-family:var(--mono);">P3</div><div class="ns-body"><strong>SIS is the highest-leverage layer.</strong> Done before you need it for state audit. Liz's stated priority. Makes the Part 4 portal meaningful from day one (progress tracking works because the SIS is live).</div></div>
+      <div class="ns"><div class="ns-n" style="font-size:1rem;color:var(--c4);font-family:var(--mono);">P4</div><div class="ns-body"><strong>Portal stages in fall/winter.</strong> Budget opens up after house construction. Foundation (Stage A) enables everything. BR prototype (Stage B) gets students value immediately at low cost and risk.</div></div>
+    </div>
+
+    <hr class="rule-line">
+
+    <div class="slbl">What's deliberately deferred</div>
+    <div class="callout">
+      <div class="callout-lbl">File migration — $2,000 – $4,000 when we get there</div>
+      <p>Once Part 1 establishes the new Workspace, Shared Drive, and storage rules, the existing pile of files still needs to be triaged and moved into the new structure. Migrating before the structure is settled means organizing into a system that's still being defined — and likely doing it twice. Better to let the new structure prove itself with new material first. Scoped once we can see the actual pile.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PRICING
+══════════════════════════════════════════════ -->
+<div id="pr" class="panel">
+  <div class="part-hdr">
+    <div class="part-hdr-in">
+      <div class="part-bar" style="background:var(--ink-muted);"></div>
+      <div class="slbl">Pricing</div>
+      <div class="part-title">Costs at a Glance</div>
+      <p class="part-summary">Every part of this engagement is priced as a range with a not-to-exceed ceiling — which means if the work comes in under that ceiling, you pay what it actually cost. No surprises. Each part is scoped and agreed to separately, so you're never committing to more than you're ready for.</p>
+      <p class="part-summary">The retainer stays exactly where it is and isn't counted in any number here. Rates: Tech support $100/hr · Consulting $150/hr depending on the nature of the work.</p>
+      <div class="part-pills">
+        <span class="pill">$25,800 – $42,000 across 9 months</span>
+        <span class="pill-timing">All parts, all stages · Separately scoped and approved</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="slbl">All parts, all ranges</div>
+
+    <table class="ptable mt2">
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>Range</th>
+          <th>Timing</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="pi"><div class="cdot" style="background:var(--c1);"></div>Part 1 — Foundation (domain, hosting, Workspace)</div></td>
+          <td class="pr">$1,800 – $3,000</td>
+          <td class="ti">Now</td>
+          <td class="note">+ ~$168/yr direct to Google for Workspace</td>
+        </tr>
+        <tr>
+          <td><div class="pi"><div class="cdot" style="background:var(--c2);"></div>Part 2 — Ingestion Pipeline</div></td>
+          <td class="pr">$3,000 – $5,000</td>
+          <td class="ti">Jul / Aug 2026</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><div class="pi"><div class="cdot" style="background:var(--c3);"></div>Part 3 — Student Information System</div></td>
+          <td class="pr">$8,000 – $12,000</td>
+          <td class="ti">Fall 2026</td>
+          <td></td>
+        </tr>
+        <tr class="sub">
+          <td colspan="4" style="font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);">Part 4 — Custom Course Portal (staged)</td>
+        </tr>
+        <tr>
+          <td style="padding-left:1.75rem;"><div class="pi"><div class="cdot" style="background:var(--c4);"></div>Stage A — Foundation (auth, design, infrastructure)</div></td>
+          <td class="pr">$5,000 – $7,000</td>
+          <td class="ti">Fall 2026</td>
+          <td class="note">Required first — enables all subsequent stages</td>
+        </tr>
+        <tr>
+          <td style="padding-left:1.75rem;"><div class="pi"><div class="cdot" style="background:rgba(184,134,11,.75);"></div>Stage B — Blueprint Resonance prototype</div></td>
+          <td class="pr">$1,500 – $3,000</td>
+          <td class="ti">Fall 2026</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="padding-left:1.75rem;"><div class="pi"><div class="cdot" style="background:rgba(184,134,11,.55);"></div>Stage C — Workshop / single-lecture pathway</div></td>
+          <td class="pr">$1,500 – $3,000</td>
+          <td class="ti">Winter 2026/2027</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="padding-left:1.75rem;"><div class="pi"><div class="cdot" style="background:rgba(184,134,11,.38);"></div>Stage D — 350-hour course portal (Cohort Z)</div></td>
+          <td class="pr">$5,000 – $9,000</td>
+          <td class="ti">Feb 2027 launch target</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="padding-left:1.75rem;"><div class="pi"><div class="cdot" style="background:var(--rule);"></div>Each additional cohort / class thereafter</div></td>
+          <td class="pr">$2,000 – $4,000</td>
+          <td class="ti">As needed</td>
+          <td class="note">Templated — fast once Stage D is done</td>
+        </tr>
+        <tr>
+          <td><div class="pi"><div class="cdot" style="background:var(--cp);"></div>Playbooks (individual, as needed)</div></td>
+          <td class="pr">$300 – $1,000 ea.</td>
+          <td class="ti">Ongoing</td>
+          <td class="note">Two lightest inside retainer; rest scoped individually</td>
+        </tr>
+        <tr>
+          <td><div class="pi"><div class="cdot" style="background:var(--sage);"></div>Addendum — BR Interim Page (optional)</div></td>
+          <td class="pr">$800 – $1,500</td>
+          <td class="ti">Available now</td>
+          <td class="note">Bridge only — retired when Stage B ships</td>
+        </tr>
+        <tr class="tot">
+          <td>Total (Parts 1–4, all stages)</td>
+          <td class="pr" colspan="3">$25,800 – $42,000 across 9 months</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="pricing-note" style="font-size:.85rem;color:var(--ink-muted);margin-top:1.5rem;line-height:1.7;max-width:640px;">
+      <strong style="color:var(--ink);">Ranges, not fixed quotes.</strong> Each part gets a clear scope-of-work agreement before it starts, with a not-to-exceed ceiling tied to the upper end of the range. If actual hours come in below the ceiling, you pay the actual cost. The ceiling protects you from surprises.<br><br>
+      <strong style="color:var(--ink);">Rates:</strong> Tech support $100/hr · Consulting $150/hr depending on the nature of the work.<br><br>
+      <strong style="color:var(--ink);">The retainer</strong> ($500/month) continues unchanged and is not included in any figure above.
+    </p>
+
+    <hr class="rule-line">
+
+    <div class="slbl">What's not in this proposal</div>
+    <div class="ni" style="margin-top:.5rem;">
+      <p><strong style="color:var(--ink-light);">Roles &amp; decision-making framework.</strong> The formal Nancy-owns-X / Liz-owns-Y / joint-with-approval structure. Worth a short follow-up conversation when convenient.</p>
+      <p style="margin-top:.6rem;"><strong style="color:var(--ink-light);">Retainer review.</strong> Nancy's Administrative Director title meaningfully expands ongoing scope. Holding this until after the house wraps and the season turns, but flagged for awareness.</p>
+      <p style="margin-top:.6rem;"><strong style="color:var(--ink-light);">Full custom platform (Path C).</strong> Deferred — Path B with staged growth is the right architecture at current scale. If you ever want a fully integrated multi-course platform with built-in CMS, that's a Path B → Path C migration, not a from-scratch build.</p>
+      <p style="margin-top:.6rem;"><strong style="color:var(--ink-light);">Continuing administrative work and module updates.</strong> These continue under the existing retainer.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     THE FABLE
+══════════════════════════════════════════════ -->
+<div id="fable" class="panel">
+
+  <div class="hero" style="padding-bottom:clamp(2.5rem,6vh,4rem);">
+    <div class="hero-in">
+      <div class="hero-lbl">Working with Babies</div>
+      <h1>The Week Before</h1>
+      <p style="font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--ink-light);margin-top:.5rem;">A small, true story about the workshop — and what it costs to run it.</p>
+    </div>
+  </div>
+
+  <div style="max-width:820px;margin:0 auto;padding:clamp(2.5rem,6vh,4rem) var(--g);">
+
+    <div id="fable-before" style="font-family:var(--body);font-size:.75rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1.5rem;">How the week goes</div>
+
+    <h2 style="font-family:var(--display);font-size:1.6rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:1.5rem;">How the week goes</h2>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;">It's late June, and Working with Babies is three weeks out. Kate White flies in on July 8th to teach for five days. Twenty-eight seats. Most of them spoken for — though "most" is doing a lot of work in that sentence, because knowing exactly who's coming would take an afternoon Nancy doesn't have.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">Here's the afternoon. The confirmation went out as a group email — a warm note, deposit instructions, the address on Arapahoe — sent to everyone at once. The sending was easy. It's what comes back that isn't. Twenty-eight replies, if she's lucky, trickling in over a week, each one a little different. "Yes! Can't wait — is there parking?" "I'm in, I sent the deposit last week, did it come through?" "Yes, and I'm really hoping we'll cover premature infants, that's why I'm coming." Nancy reads each one and pulls out the yes by hand. But the deposit question she can't answer at all — she has no window into payments, and shouldn't; the financials live with Liz. So "did my deposit come through?" becomes a note to pass along, and the real answer to "who has actually paid?" exists in exactly one place, in one person's view, and nowhere Nancy can see. The two halves of each student — are they coming, have they paid — never sit in the same place.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">She keeps a running tally in a document. Twenty-four yeses, maybe twenty-five; one person said yes and then asked a question that sounded like a maybe. Three people haven't replied at all. And which of the yeses have actually paid their deposit, she truly cannot say — that's Liz's to check, when Liz has a moment, against a system only Liz can see. A few seats might be open, which means the waitlist — except there's no real waitlist, not in any ordered sense. No one wrote down when each person signed up, so there's no first-come list to draw from. "Who's next" is whoever Nancy can remember, or scroll back far enough to find. The order gets improvised every time, and each person gets their own note, written by hand.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">Then there are the intentions. Kate likes to know what's drawing people — it shapes how she teaches the week. So Nancy sends a second email asking, gathers the replies into a fresh document, and formats them by hand so Kate can read them on the plane. The premature-infants person goes in. So does the NICU nurse, and the one returning to the work after her own birth. It's a lovely document. It will be read once and never opened again.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">And the lodging. Boulder is expensive, so nine community members open rooms to visiting students. Their rates change, their availability changes, and the only record is last year's email thread. So Nancy writes to all nine, asking them to confirm — again — what they charge and whether they have space, then relays each answer to the students who asked.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">None of it is hard, exactly. It's that every piece lives in Nancy's head and her inbox, and none of it will still be there the next time Working with Babies runs. In a year, she'll do all of it again, from the beginning.</p>
+
+    <p style="font-family:var(--display);font-style:italic;font-size:1rem;color:var(--ink-muted);margin-top:1.5rem;">The workshop, for the record, is wonderful. It always is.</p>
+
+    <hr style="border:none;border-top:1px solid var(--rule);margin:3rem 0;">
+
+    <div id="fable-after" style="font-family:var(--body);font-size:.75rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1.5rem;">How it could go</div>
+
+    <h2 style="font-family:var(--display);font-size:1.6rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:1.5rem;">How the week could go</h2>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;">It's late June, and Working with Babies is three weeks out. The same twenty-eight seats, the same Kate White, the same July 8th.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">Weeks ago, one tracked message went out to the whole list at once — not twenty-eight separate emails, but a single send that quietly reports who opened it and who didn't, so a gentle nudge can go only to the people who never saw it. Inside was one link. Not an email to reply to — a form. Are you coming? Yes or no. What's drawing you to the work? Where are you traveling from, and do you need lodging?</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">The form already knew who some of these people were. Returning students — anyone who'd taken a class before — came in flagged as <em>already in the system</em>, their record recognized rather than rebuilt, no duplicate, no re-keying.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">The answers didn't land in an inbox. They landed in one place, already sorted. The yes-count sits at the top, against a capacity of twenty-eight, and it's simply right — not "twenty-four, maybe twenty-five," but right, because every yes is a row, not a sentence someone had to interpret. And every row is stamped with the moment it arrived, so the waitlist orders itself: first to sign up, first in line, no one's memory required. When a person marked no, the next name surfaced on its own — the right next name, by date, not by whoever happened to be remembered.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">And the seat itself is gated. A spot isn't held because someone said yes — it's held when the deposit arrives. Payment opens the gate automatically: paid, you're in; unpaid, you're simply not yet, and no one has to notice the gap or chase it, because the gap is closed by default. The exception runs the other way now — letting someone in <em>without</em> payment takes a deliberate, positive approval, instead of an unpaid spot quietly sitting open until someone catches it.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">Nancy still can't see the financials, and still shouldn't — that stays with Liz. But she doesn't need to. What shows on the record isn't the money, just the <em>status</em>: a small green word that says <em>paid</em>, set by the system the moment payment lands. The two halves of each student — are they coming, have they paid — finally sit in the same place, without Nancy ever touching the till.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">The intentions are already a list. The premature-infants person, the NICU nurse, the one returning after her own birth — all of it in one column, and Kate gets a view of exactly that. No document to assemble, nothing to format. She reads it on the plane. It's still lovely. It just cost no one an evening.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">The lodging hosts each keep a record current themselves. When a student asks about a room, the answer is already there.</p>
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;margin-top:1.1rem;">And here's the part that matters most: next July, when Working with Babies runs again, none of this starts over. The form is still there. The hosts' records are still current. The structure Nancy built once simply runs again — and she spends her June on the things only a person can do.</p>
+
+    <p style="font-family:var(--display);font-style:italic;font-size:1rem;color:var(--ink-muted);margin-top:1.5rem;">The workshop, for the record, is wonderful. It always was. That was never the problem.</p>
+
+    <hr style="border:none;border-top:1px solid var(--rule);margin:3rem 0;">
+
+    <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.75;">The teaching was always going to be good. The only question was whether the week before it had to cost so much — whether running a beautiful workshop had to mean rebuilding the same scaffolding by hand, every time, in one person's head.</p>
+
+    <p style="font-family:var(--display);font-size:1.8rem;font-weight:400;color:var(--accent);margin-top:1.5rem;line-height:1.2;">It doesn't.</p>
+
+    <p style="font-family:var(--mono);font-size:.72rem;color:var(--ink-muted);margin-top:2.5rem;letter-spacing:.04em;">Blueprint for Creativity</p>
+
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <span>Blueprint for Creativity · Nancy &amp; Andrew · June 2026</span>
+    <span>CSES Engagement Proposal · Confidential</span>
+  </div>
+</footer>
+
+<script>
+// ── PANEL SWITCHER ──────────────────────────────────────
+const PHASE_TARGETS = new Set(['p1','p2','p3','p4','pb','addendum']);
+
+function show(t) {
+  // hide all panels, clear all nav active states
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.top-nav .nb').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.dropdown-item').forEach(b => b.classList.remove('on'));
+
+  // show target panel
+  const panel = document.getElementById(t);
+  if (panel) panel.classList.add('on');
+
+  // mark active nav button
+  const btn = document.querySelector('.top-nav .nb[data-t="' + t + '"]');
+  if (btn) btn.classList.add('on');
+
+  // if target is a phase, mark the phases button active too
+  if (PHASE_TARGETS.has(t)) {
+    const phasesBtn = document.getElementById('phasesBtn');
+    if (phasesBtn) phasesBtn.classList.add('on');
+    // mark the matching dropdown item
+    const dItem = document.querySelector('.dropdown-item[data-t="' + t + '"]');
+    if (dItem) dItem.classList.add('on');
+  }
+
+  window.scrollTo(0, 0);
+  if (typeof updatePhaseSubnav === 'function') updatePhaseSubnav(t);
+}
+
+// ── DROPDOWN ────────────────────────────────────────────
+function showFromDropdown(t) {
+  closeDropdown();
+  show(t);
+}
+
+function showFableSection(sectionId) {
+  closeDropdown();
+  show('fable');
+  requestAnimationFrame(() => {
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+function closeDropdown() {
+  document.getElementById('phasesDropdown').classList.remove('open');
+}
+
+// phases button click toggles dropdown (mobile / explicit click)
+document.getElementById('phasesBtn').addEventListener('click', function(e) {
+  const dd = document.getElementById('phasesDropdown');
+  dd.classList.toggle('open');
+});
+
+// click outside closes dropdown
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('phasesDropdown');
+  if (!dd.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+
+// ── PLAIN NAV BUTTONS (non-dropdown) ────────────────────
+document.querySelectorAll('.top-nav .nb:not(#phasesBtn)').forEach(btn => {
+  btn.addEventListener('click', () => show(btn.dataset.t));
+});
+
+// ── PHASE SUBNAV ────────────────────────────────────────
+const phaseSubnav = document.getElementById('phaseSubnav');
+function updatePhaseSubnav(t) {
+  const isPhase = PHASE_TARGETS.has(t);
+  phaseSubnav.classList.toggle('visible', isPhase);
+  document.querySelectorAll('.psn-btn').forEach(b => b.classList.remove('on'));
+  if (isPhase) {
+    const active = phaseSubnav.querySelector('.psn-btn[data-t="' + t + '"]');
+    if (active) active.classList.add('on');
+  }
+}
+
+// ── HAMBURGER / DRAWER ──────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const drawer    = document.getElementById('drawer');
+const backdrop  = document.getElementById('drawerBackdrop');
+
+function openDrawer() {
+  drawer.classList.add('open');
+  backdrop.style.display = 'block';
+  requestAnimationFrame(() => { backdrop.style.opacity = '1'; });
+  hamburger.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawerFn() {
+  drawer.classList.remove('open');
+  backdrop.style.opacity = '0';
+  setTimeout(() => { backdrop.style.display = 'none'; }, 260);
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', () =>
+  drawer.classList.contains('open') ? closeDrawerFn() : openDrawer());
+backdrop.addEventListener('click', closeDrawerFn);
+document.getElementById('drawerClose').addEventListener('click', closeDrawerFn);
+
+function showAndClose(t) { closeDrawerFn(); show(t); }
+
+// ── STAGE EXPANDER ──────────────────────────────────────
+function toggleStage(hdr) {
+  const body = hdr.nextElementSibling;
+  const toggle = hdr.querySelector('.stage-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '+ expand' : '– collapse';
+}
+</script>
+</body>
+</html>
